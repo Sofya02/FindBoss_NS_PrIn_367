@@ -134,19 +134,20 @@ int GettingIdFromTxtFile()
     }
 }
 
-void work_with_xml() 
+bool work_with_xml() 
 {
     XMLDocument doc;
     doc.LoadFile("hierarchy_tree.xml");
     if (doc.ErrorID() != 0) {
         cout << "read xml error!" << endl;
+        return false;
     }
 
     int id_from_txt = GettingIdFromTxtFile();
     XMLElement* node = doc.FirstChildElement()->FirstChildElement("Department");
     SearchSuperiorsOfTheDesiredEmployee(node, id_from_txt);
 
-
+    return true;
 }
 
 int main(int argc, char* argv[])
@@ -157,7 +158,7 @@ int main(int argc, char* argv[])
     work_with_xml();
 
    
-
+    return 0;
 }
 
 
