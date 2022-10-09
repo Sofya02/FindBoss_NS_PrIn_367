@@ -8,6 +8,7 @@
 
 using namespace std;
 using namespace tinyxml2;
+
 struct Person {
     string Name;
     int id;
@@ -17,6 +18,19 @@ vector <int> headers;
 vector <bool> habsent;
 vector <Person> person;
 
+
+string MatchingIdAndName(int id_for_name)
+{
+    for (int i = 0; i < person.size(); i++)
+    {
+        if (person[i].id == id_for_name)
+        {
+            return person[i].Name;
+        }
+    }
+}
+
+
 /*!
 * \Функция поиска начальников искомого сотрудника*****
 * \param [in]
@@ -25,8 +39,6 @@ vector <Person> person;
 
 
 */
-string match(int id_t);
-
 void SearchSuperiorsOfTheDesiredEmployee(XMLElement* node, int findid)
 {
     while (node != NULL) {
@@ -76,7 +88,7 @@ void SearchSuperiorsOfTheDesiredEmployee(XMLElement* node, int findid)
                     fout.open("output.txt", std::ios::app);
                     for (int i = headers.size() - 2; i >= 0; i--)
                     {
-                        if (habsent[i]) { fout << match(headers[i]) << endl; }
+                        if (habsent[i]) { fout << MatchingIdAndName(headers[i]) << endl; }
                     }
                     fout.close();
                 }
@@ -134,25 +146,12 @@ int main(int argc, char* argv[])
     }
 
     int id_from_txt = GettingIdFromTxtFile();
-    id_from_txt = 8;//here
     XMLElement* node = doc.FirstChildElement()->FirstChildElement("Department");
     SearchSuperiorsOfTheDesiredEmployee(node, id_from_txt);
 
 
    
 
-}
-
-string match(int id_t)
-{
-   
-    for (int i = 0; i < person.size(); i++)
-    {
-        if (person[i].id == id_t)
-        {
-            return person[i].Name;
-        }
-    }
 }
 
 
