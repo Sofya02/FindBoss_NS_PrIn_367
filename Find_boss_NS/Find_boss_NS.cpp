@@ -19,7 +19,7 @@ vector <int> headers;
 vector <bool> habsent;
 vector <Person> person;
 
-
+//Функция сопоставления id и ФИО
 string MatchingIdAndName(int id_for_name)
 {
     for (int i = 0; i < person.size(); i++)
