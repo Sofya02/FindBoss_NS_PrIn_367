@@ -6,6 +6,7 @@
 #include "tinyxml2.h"
 #include <vector>
 
+
 using namespace std;
 using namespace tinyxml2;
 
@@ -133,22 +134,27 @@ int GettingIdFromTxtFile()
     }
 }
 
-
-
-int main(int argc, char* argv[])
+void work_with_xml() 
 {
-    setlocale(LC_ALL, "Rus");
     XMLDocument doc;
     doc.LoadFile("hierarchy_tree.xml");
     if (doc.ErrorID() != 0) {
         cout << "read xml error!" << endl;
-        return 0;
     }
 
     int id_from_txt = GettingIdFromTxtFile();
     XMLElement* node = doc.FirstChildElement()->FirstChildElement("Department");
     SearchSuperiorsOfTheDesiredEmployee(node, id_from_txt);
 
+
+}
+
+int main(int argc, char* argv[])
+{
+    setlocale(LC_ALL, "Rus");
+    
+
+    work_with_xml();
 
    
 
