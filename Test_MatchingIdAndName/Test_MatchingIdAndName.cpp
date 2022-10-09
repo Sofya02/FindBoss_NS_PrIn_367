@@ -10,12 +10,20 @@ namespace TestMatchingIdAndName
 	{
 	public:
 		
-		TEST_METHOD(TestMethod1)
+		TEST_METHOD(ThereIsAMatchBetweenIdAndName)
 		{
+
+
+		};
+
+		TEST_METHOD(NoAMatchBetweenIdAndName)
+		{
+
 
 		}
 	};
 }
+
 
 /*
 
