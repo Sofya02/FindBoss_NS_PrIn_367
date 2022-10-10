@@ -197,7 +197,7 @@ int GettingIdFromTxtFile(const char* file_txt)
 
 
 /*Работа с xml файлом*/
-int WorkingWithXMLFile(const char* file_xml)
+bool WorkingWithXMLFile(const char* file_xml)
 {
     XMLDocument doc;
     doc.LoadFile("hierarchy_tree.xml");
@@ -209,5 +209,6 @@ int WorkingWithXMLFile(const char* file_xml)
     int id_from_txt = GettingIdFromTxtFile(txt_file);
     XMLElement* node = doc.FirstChildElement()->FirstChildElement("Department");
     SearchSuperiorsOfTheDesiredEmployee(node, id_from_txt);
+    return true;
 }
 
