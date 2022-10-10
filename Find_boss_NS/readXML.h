@@ -70,7 +70,7 @@ void SearchSuperiorsOfTheDesiredEmployee(XMLElement* node, int findid)
             node->QueryIntAttribute("id", &id);//получение значения "id"
             p.Name = node->GetText();
             p.id = id;
-            person.push_back(p);
+            person.push_back(p);//добавление сотрудника
             node->QueryIntAttribute("absent", &absent);//получение значение "absent"
             //Если текущего сотрудника нет на рабочем месте, переход к следующему сотруднику
             if (findAbsent == absent)

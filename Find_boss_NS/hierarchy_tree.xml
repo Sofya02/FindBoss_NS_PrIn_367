@@ -9,7 +9,7 @@
 		<Department head="4"  name="Концепт-художник">
 		 <Person id="4"> Рекрутова Марина Игоревна </Person>
 		</Department>      
-		<Department head="5" name="Команда художников по текстурам">
+		<Department head="6" name="Команда художников по текстурам">
 		 <Person id="5"> Алефьев Петр Константинович </Person>
 		 <Person id="6"> Белогуров Артем Игоревич </Person>
 		</Department>      
