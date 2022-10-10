@@ -15,16 +15,10 @@ int main(int argc, char* argv[])
 {
     setlocale(LC_ALL, "Rus");
     
-    XMLDocument doc;
-    doc.LoadFile("hierarchy_tree.xml");
-    if (doc.ErrorID() != 0) {
-        cout << "read xml error!" << endl;
-        return false;
-    }
+    const char* xml_file = "hierarchy_tree.xml";
 
-    int id_from_txt = GettingIdFromTxtFile();
-    XMLElement* node = doc.FirstChildElement()->FirstChildElement("Department");
-    SearchSuperiorsOfTheDesiredEmployee(node, id_from_txt);
+    WorkingWithXMLFile(xml_file);
+    
    
     return 0;
 }

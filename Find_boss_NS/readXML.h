@@ -4,7 +4,7 @@
 #include <string> //для работы getline
 #include <exception> 
 #include <vector>
-
+#include "tinyxml2.h"
 
 using namespace std;
 using namespace tinyxml2;
@@ -105,7 +105,7 @@ void SearchSuperiorsOfTheDesiredEmployee(XMLElement* node, int findid)
 }
 
 /*Получение id из txt-файла*/
-int GettingIdFromTxtFile()
+int GettingIdFromTxtFile(const char* file_txt)
 {
     int id_txt;
     //Получение значения id из txt - файла
@@ -132,5 +132,21 @@ int GettingIdFromTxtFile()
         cout << "read txt error!" << endl;
         return 0;
     }
+}
+
+
+/*XML*/
+int WorkingWithXMLFile(const char* file_xml)
+{
+    XMLDocument doc;
+    doc.LoadFile("hierarchy_tree.xml");
+    if (doc.ErrorID() != 0) {
+        cout << "read xml error!" << endl;
+        return false;
+    }
+    const char* txt_file = "id.txt";
+    int id_from_txt = GettingIdFromTxtFile(txt_file);
+    XMLElement* node = doc.FirstChildElement()->FirstChildElement("Department");
+    SearchSuperiorsOfTheDesiredEmployee(node, id_from_txt);
 }
 
