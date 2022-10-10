@@ -10,13 +10,29 @@ namespace TestWorkingWithXMLFile
 	{
 	public:
 		
-		TEST_METHOD(TestMethod1)
+		TEST_METHOD(FileNotEntered)
 		{
             const char* file_xml = "";
-            bool res = true;
+            bool res = false;
             bool exp_res = WorkingWithXMLFile(file_xml);
             Assert::AreEqual(res, exp_res);
 		}
+
+        TEST_METHOD(FileNotFound)
+        {
+            const char* file_xml = "woidjeid.txt";
+            bool res = false;
+            bool exp_res = WorkingWithXMLFile(file_xml);
+            Assert::AreEqual(res, exp_res);
+        }
+
+        TEST_METHOD(FileIsCorrect)
+        {
+            const char* file_xml = "hierarchy_tree.txt";
+            bool res = true;
+            bool exp_res = WorkingWithXMLFile(file_xml);
+            Assert::AreEqual(res, exp_res);
+        }
 	};
 }
 
