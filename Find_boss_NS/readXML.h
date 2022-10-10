@@ -115,6 +115,7 @@ int GettingIdFromTxtFile(const char* file_txt)
     //если открытие файла прошло корректно, то
     if (file)
     {
+       // if (file.tellg() == 0) { cout << "ERROR" << endl; }
         //цикл для чтения значений из файла; выполнение цикла прервется,
            // когда достигнем конца файла, в этом случае F.eof() вернет истину.
         while (!file.eof())
@@ -129,7 +130,7 @@ int GettingIdFromTxtFile(const char* file_txt)
     else
     {
         //Вывод сообщения об ошибке и завершение работы программы
-        cout << "read txt error!" << endl;
+        cout << "Invalid input file specified. The file may not exist" << endl;
         return 0;
     }
 }
@@ -141,7 +142,7 @@ int WorkingWithXMLFile(const char* file_xml)
     XMLDocument doc;
     doc.LoadFile("hierarchy_tree.xml");
     if (doc.ErrorID() != 0) {
-        cout << "read xml error!" << endl;
+        cout << "Invalid input file specified. The file may not exist" << endl;
         return false;
     }
     const char* txt_file = "id.txt";
