@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "CppUnitTest.h"
-#include "../Find_boss_NS/tinyxml2.h"
+#include "../Find_boss_NS/readXML.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
