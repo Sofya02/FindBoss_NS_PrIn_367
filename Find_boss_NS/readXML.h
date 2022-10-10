@@ -10,8 +10,8 @@ using namespace std;
 using namespace tinyxml2;
 
 struct Person {
-    string Name;
-    int id;
+    string Name;//ФИО сотрудника
+    int id;//id сотрудника
 };
 
 vector <int> headers;
@@ -19,18 +19,24 @@ vector <bool> habsent;
 vector <Person> person;
 
 
-//Функция сопоставления id и ФИО
+/*!Функция сопоставления id и ФИО
+* 
+* \param[in] id-сотрудника(текущее)
+* 
+* return значение ФИО соответствующее его id
+*/
 string MatchingIdAndName(int id_for_name)
 {
     for (int i = 0; i < person.size(); i++)
     {
+        //Если текущее id соответсвует id_имени человека
         if (person[i].id == id_for_name)
         {
+            //возвращаем значение его ФИО
             return person[i].Name;
         }
     }
 }
-
 
 /*!
 * \Функция поиска начальников искомого сотрудника*****
@@ -42,66 +48,85 @@ string MatchingIdAndName(int id_for_name)
 */
 void SearchSuperiorsOfTheDesiredEmployee(XMLElement* node, int findid)
 {
-    while (node != NULL) {
-        string s = string((char*)node->Value());
-        if (s == "Department")
+    //Пока не конец документа(есть элементы)???????????????????
+    while (node != NULL) 
+    {
+        string element = string((char*)node->Value());//преобразование char в string?????????????
+        //Если название элемента есть "Department"
+        if (element == "Department")
         {
             int id;
-            node->QueryIntAttribute("head", &id);
-            headers.push_back(id);
-            habsent.push_back(true);
+            node->QueryIntAttribute("head", &id);//Получение значения "head" у "Department"(начальник отдела)
+            headers.push_back(id);//добавление id
+            habsent.push_back(true);//подтверждение добавления
         }
-        if (s == "Person")
+        //Если название элемента есть "Person"
+        if (element == "Person")
         {
             int id;
             int absent;
             int findAbsent = 1;
             Person p;
-            node->QueryIntAttribute("id", &id);
+            node->QueryIntAttribute("id", &id);//получение значения "id"
             p.Name = node->GetText();
             p.id = id;
             person.push_back(p);
-            node->QueryIntAttribute("absent", &absent);
-
+            node->QueryIntAttribute("absent", &absent);//получение значение "absent"
+            //Если текущего сотрудника нет на рабочем месте, переход к следующему сотруднику
             if (findAbsent == absent)
             {
                 int i = 0;
                 while (i < headers.size())
                 {
+                    //Если соответсвие id произошло
                     if (headers[i] == id)
                     {
-
+                        //присвоение значения false 
                         habsent[i] = false;
                     }
+                    //Игнорирование данного сотрудника и переход к следующему
                     i++;
                 }
             }
+            //Если соответсвие id из txt-файла найдено
             if (findid == id)
             {
+                //Если сотрудник отсутствует
                 if (findAbsent == absent)
                 {
+                    //Вывод сообщения об ошибке
                     cout << "The person is absent" << endl;
                 }
+                //Иначе
                 else
                 {
+                    //Если id=1, следовательно-это глава фирмы, искл.ситуация, вывод об ошибке
                     if (id == 1) { cout << "No solution" << endl; }
                     ofstream fout; // объект класса ofstream
                     fout.open("output.txt", std::ios::app);
                     for (int i = headers.size() - 2; i >= 0; i--)
                     {
-                        if (habsent[i]) { fout << MatchingIdAndName(headers[i]) << endl; }
+                        //Если сотрудник присутствует на рабочем месте, записываем его в выходной файл
+                        if (habsent[i]) 
+                        { 
+                            //Записываем сотрудника в выходной файл
+                            fout << MatchingIdAndName(headers[i]) << endl; 
+                        }
                     }
+                    //Закрытие файла
                     fout.close();
                 }
-            }
+            }//if (!findid) { cout << "Invalid employee id. Perhaps it doesn't exist." << endl; }
         }
+        //Рекурсивный вызов: для поиска искомого сотрудника в дочерних элементах
         SearchSuperiorsOfTheDesiredEmployee(node->FirstChildElement(), findid);
-        if (s == "Department") {
+        if (element == "Department") {
             headers.pop_back();
             habsent.pop_back();
         }
         node = node->NextSiblingElement();//Переход к следующему элементу
     }
+    
 }
 
 /*Получение id из txt-файла*/
@@ -111,7 +136,7 @@ int GettingIdFromTxtFile(const char* file_txt)
     //Получение значения id из txt - файла
     fstream file;
     //открываем файл в режиме чтения
-    file.open("id.txt");
+    file.open(file_txt);
     //если открытие файла прошло корректно, то
     if (file)
     {
@@ -122,7 +147,10 @@ int GettingIdFromTxtFile(const char* file_txt)
         {
             //чтение очередного значения из потока F в переменную a
             file >> id_txt;
-            return id_txt;
+            if (isdigit(id_txt) == false)
+            { 
+                return id_txt;
+            }
         }
         //закрытие файла
         file.close();
